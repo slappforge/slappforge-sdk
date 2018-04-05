@@ -2,7 +2,7 @@
   "name": "slappforge-sdk-aws",
   "version": "0.0.4",
   "description": "A simple wrapper library for AWS SDK. This can be used with AWS Lambda functions.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -22,5 +22,10 @@
   "bugs": {
     "url": "https://github.com/slappforge/slappforge-sdk/issues"
   },
-  "homepage": "https://github.com/slappforge/slappforge-sdk#readme"
+  "homepage": "https://github.com/slappforge/slappforge-sdk#readme",
+  "dependencies": {
+    "aws-sdk": "^2.221.1",
+    "aws4": "^1.6.0",
+    "mysql": "^2.15.0"
+  }
 }
