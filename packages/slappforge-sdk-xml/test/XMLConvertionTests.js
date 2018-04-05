@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-const XMLUtils = require("../src/XMLUtils");
-let xmlUtils = new XMLUtils();
+const XMLConverter = require("../src/XMLConverter");
+let xmlConverter = new XMLConverter();
 
 /**
  * @author Udith Gunaratna
@@ -215,13 +215,13 @@ exports.xmlToJSCompactConversions = {
 };
 
 function testXMLToJsonConversion(test, inputXML, expectedResult, isCompact) {
-    let result = xmlUtils.convertToJsonStr(inputXML, isCompact);
+    let result = xmlConverter.convertToJsonStr(inputXML, isCompact);
     test.equal(result, expectedResult);
     test.done();
 }
 
 function testXMLToJSConversion(test, inputXML, expectedResult, isCompact) {
-    let result = xmlUtils.convertToJSObject(inputXML, isCompact);
+    let result = xmlConverter.convertToJSObject(inputXML, isCompact);
     test.equal(JSON.stringify(result), JSON.stringify(expectedResult));
     test.done();
 }

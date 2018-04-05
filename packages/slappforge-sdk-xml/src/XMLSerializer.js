@@ -1,0 +1,57 @@
+/*
+ * Copyright (c) 2017-2018 SLAppForge Lanka Private Ltd. (https://www.slappforge.com).
+ *
+ * Licensed under the Apache License, Version 2.0 (the “License”);
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an “AS IS” BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+let xmlDOM = require('xmldom');
+
+/**
+ * @author Udith Gunaratna
+ */
+module.exports = function () {
+
+    /**
+     * Returns a new DOM serializer instance
+     *
+     * @return {XMLSerializer}
+     */
+    this.getDOMSerializer = function () {
+        return new xmlDOM.XMLSerializer();
+    };
+
+    /**
+     * Serializes the given DOM node to a string using a new DOM serializer instance
+     *
+     * @param   domNode DOM node to be serialized
+     * @return {string} representation of the DOM node
+     */
+    this.serializeDOMToString = function (domNode) {
+        return this.serializeDOMToString(this.getDOMSerializer(), domNode);
+    };
+
+    /**
+     * Serializes the given DOM node to a string using the given DOM serializer instance
+     *
+     * @param domSerializer
+     * @param   domNode DOM node to be serialized
+     * @return {string} representation of the DOM node
+     */
+    this.serializeDOMToString = function (domSerializer, domNode) {
+        if (domSerializer) {
+            return domSerializer.serializeToString(domNode);
+        } else {
+            return this.serializeDOMToString(domNode);
+        }
+    };
+};

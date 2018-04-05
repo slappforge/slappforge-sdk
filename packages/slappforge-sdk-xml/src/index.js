@@ -14,4 +14,7 @@
  * limitations under the License.
  */
 
-exports.XMLUtils = require('./XMLUtils');
+exports.XMLParser = require('./XMLParser');
+exports.XMLSerializer = require('./XMLSerializer');
+exports.XMLConverter = require('./XMLConverter');
+exports.XPathEvaluator = require('./XPathEvaluator');

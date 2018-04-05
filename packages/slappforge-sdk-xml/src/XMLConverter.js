@@ -15,42 +15,35 @@
  */
 
 let xmlJS = require('xml-js');
-let xmlDOM = require('xmldom');
-let xpath = require('xpath');
 
 /**
  * @author Udith Gunaratna
  */
 module.exports = function () {
 
-    this.parseDOMFromString = function (xmlString, mimeType = 'text/xml') {
-        return new xmlDOM.DOMParser().parseFromString(xmlString, mimeType);
-    };
-
-    this.serializeDOMToString = function(domNode) {
-        return new xmlDOM.XMLSerializer().serializeToString(domNode);
-    };
-    
+    /**
+     * Converts the given XML string to the corresponding JSON string
+     *
+     * @param xmlString             XML string to be converted
+     * @param compactOutput         whether to generate compact output (default is true)
+     * @param options {XML2JSON}    additional options to be used in conversion
+     * @return {string} of JSON
+     */
     this.convertToJsonStr = function (xmlString, compactOutput = true, options = {}) {
         options['compact'] = compactOutput;
         return xmlJS.xml2json(xmlString, options);
     };
 
+    /**
+     * Converts the given XML string to the corresponding Javascript object
+     *
+     * @param xmlString         XML string to be converted
+     * @param compactOutput     whether to generate compact output (default is true)
+     * @param options {XML2JS}  additional options to be used in conversion
+     * @return {any} Javascript object
+     */
     this.convertToJSObject = function (xmlString, compactOutput = true, options = {}) {
         options['compact'] = compactOutput;
         return xmlJS.xml2js(xmlString, options);
     };
-    
-    this.evaluateXPath = function (document, xpathStr, namespaces = null) {
-        // If the provided document is an XML string, parse it to a DOM element
-        let parsedDoc = (typeof document === 'string' || document instanceof String) ?
-            this.parseDOMFromString(document) : document;
-
-        if (namespaces) {
-            let select = xpath.useNamespaces(namespaces);
-            return select(xpathStr, parsedDoc);
-        } else {
-            return xpath.select(xpathStr, parsedDoc);
-        }
-    }
 };
