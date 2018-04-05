@@ -2,9 +2,9 @@
   "name": "slappforge-sdk-xml",
   "version": "0.0.4",
   "description": "A collection of XML processing utilities that can be used with NodeJS applications.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node node_modules/nodeunit/bin/nodeunit test"
   },
   "repository": {
     "type": "git",
@@ -22,5 +22,13 @@
   "bugs": {
     "url": "https://github.com/slappforge/slappforge-sdk/issues"
   },
-  "homepage": "https://github.com/slappforge/slappforge-sdk#readme"
+  "homepage": "https://github.com/slappforge/slappforge-sdk#readme",
+  "dependencies": {
+    "xml-js": "^1.6.2",
+    "xmldom": "^0.1.27",
+    "xpath": "0.0.27"
+  },
+  "devDependencies": {
+    "nodeunit": "^0.11.2"
+  }
 }
