@@ -14,7 +14,14 @@
  * limitations under the License.
  */
 
-exports.XMLParser = require('./XMLParser');
-exports.XMLSerializer = require('./XMLSerializer');
-exports.XMLConverter = require('./XMLConverter');
-exports.XPathEvaluator = require('./XPathEvaluator');
+/**
+ * @author Udith Gunaratna
+ */
+export class XPathEvaluator {
+
+    evaluateXPath(xmlString: string, xpathString: string, namespaces?: { [name: string]: string }): Array<SelectedValue>;
+
+    evaluateXPath(document: Node, xpathString: string, namespaces?: { [name: string]: string }): Array<SelectedValue>;
+}
+
+type SelectedValue = Node | Attr | string | number | boolean;

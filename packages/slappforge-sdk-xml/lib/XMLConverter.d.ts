@@ -14,4 +14,14 @@
  * limitations under the License.
  */
 
-exports.XML = require('./xml');
+import {Options} from "xml-js";
+
+/**
+ * @author Udith Gunaratna
+ */
+export class XMLConverter {
+
+    convertToJsonStr(xmlString: string, compactOutput?: boolean, options?: Options.XML2JSON): string;
+
+    convertToJsonStr(xmlString: string, compactOutput?: boolean, options?: Options.XML2JS): any;
+}

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-const XMLConverter = require("../src/XMLConverter");
+const XMLConverter = require("../lib/XMLConverter");
 let xmlConverter = new XMLConverter();
 
 /**

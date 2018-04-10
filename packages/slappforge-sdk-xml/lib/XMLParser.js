@@ -23,8 +23,6 @@ module.exports = function () {
 
     /**
      * Returns a new DOM Parser instance
-     *
-     * @return {DOMParser}
      */
     this.getDOMParser = function () {
         return new xmlDOM.DOMParser();
