@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/slappforge/slappforge-sdk#readme",
   "dependencies": {
+    "@types/mysql": "^2.15.4",
     "aws-sdk": "^2.221.1",
     "aws4": "^1.6.0",
     "mysql": "^2.15.0"

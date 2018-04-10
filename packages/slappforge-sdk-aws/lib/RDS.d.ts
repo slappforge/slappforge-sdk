@@ -13,5 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+import {Connection} from "mysql";
 
-exports.AWS = require('./aws');
+/**
+ * @author Chathura Widanage
+ */
+export class RDS {
+    constructor(connectionManager: ConnectionManager);
+
+    query(prams: QueryParams, callback: Function, connection: Connection);
+
+    beginTransaction(prams: TransactionParams, callback: Function);
+}
+
+interface RDSParams {
+    instanceIdentifier: string;
+}
+
+interface QueryParams extends RDSParams {
+    inserts: Array<string>;
+    query: string;
+}
+
+interface TransactionParams extends RDSParams {
+
+}
+
+interface ConnectionManager {
+    connections: Array<string>;
+}

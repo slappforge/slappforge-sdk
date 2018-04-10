@@ -14,5 +14,5 @@
  * limitations under the License.
  */
 
-exports.RDS = require('./RDS');
-exports.SQS = require('./SQS');
+exports.RDS = require('./lib/RDS');
+exports.SQS = require('./lib/SQS');
