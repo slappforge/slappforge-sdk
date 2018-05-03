@@ -1,6 +1,6 @@
 {
   "name": "slappforge-sdk-aws",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "A simple wrapper library for AWS SDK. This can be used with AWS Lambda functions.",
   "main": "src/index.js",
   "types": "src/index.d.ts",
