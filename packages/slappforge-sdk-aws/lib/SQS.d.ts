@@ -21,7 +21,13 @@ import AWS from "aws-sdk";
  * @author Chathura Widanage
  */
 export class SQS extends AWS.SQS {
-    receiveAndDeleteMessages(params: AWS.SQS.Types.ReceiveMessageRequest, filteringCallBack: Function, deleteCallBack: Function, errorCallBack: Function);
+
+    constructor(aws: AWS);
+
+    receiveAndDeleteMessages(params: AWS.SQS.Types.ReceiveMessageRequest,
+                             filteringCallBack: Function,
+                             deleteCallBack: Function,
+                             errorCallBack: Function);
 }
 
 

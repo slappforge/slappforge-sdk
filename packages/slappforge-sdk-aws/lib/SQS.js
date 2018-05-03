@@ -17,37 +17,38 @@
 /**
  * @author Manjula Piyumal
  * @author Chathura Widanage
+ * @author Udith Gunaratna
  */
 module.exports = function (AWS) {
     let sqs = new AWS.SQS();
 
-    this.addPermission = sqs.addPermission;
+    this.addPermission = sqs.addPermission.bind(sqs);
 
-    this.changeMessageVisibility = sqs.changeMessageVisibility;
+    this.changeMessageVisibility = sqs.changeMessageVisibility.bind(sqs);
 
-    this.changeMessageVisibilityBatch = sqs.changeMessageVisibilityBatch;
+    this.changeMessageVisibilityBatch = sqs.changeMessageVisibilityBatch.bind(sqs);
 
-    this.createQueue = sqs.createQueue;
+    this.createQueue = sqs.createQueue.bind(sqs);
 
-    this.deleteMessage = sqs.deleteMessage;
+    this.deleteMessage = sqs.deleteMessage.bind(sqs);
 
-    this.deleteMessageBatch = sqs.deleteMessageBatch;
+    this.deleteMessageBatch = sqs.deleteMessageBatch.bind(sqs);
 
-    this.deleteQueue = sqs.deleteQueue;
+    this.deleteQueue = sqs.deleteQueue.bind(sqs);
 
-    this.getQueueAttributes = sqs.getQueueAttributes;
+    this.getQueueAttributes = sqs.getQueueAttributes.bind(sqs);
 
-    this.getQueueUrl = sqs.getQueueUrl;
+    this.getQueueUrl = sqs.getQueueUrl.bind(sqs);
 
-    this.listDeadLetterSourceQueues = sqs.listDeadLetterSourceQueues;
+    this.listDeadLetterSourceQueues = sqs.listDeadLetterSourceQueues.bind(sqs);
 
-    this.listQueues = sqs.listQueues;
+    this.listQueues = sqs.listQueues.bind(sqs);
 
-    this.listQueueTags = sqs.listQueueTags;
+    this.listQueueTags = sqs.listQueueTags.bind(sqs);
 
-    this.purgeQueue = sqs.purgeQueue;
+    this.purgeQueue = sqs.purgeQueue.bind(sqs);
 
-    this.receiveMessage = sqs.receiveMessage;
+    this.receiveMessage = sqs.receiveMessage.bind(sqs);
 
     // noinspection JSUnusedGlobalSymbols
     this.receiveAndDeleteMessages = function (params, filteringCallBack, deleteCallBack, errorCallBack) {
@@ -73,15 +74,15 @@ module.exports = function (AWS) {
             });
     };
 
-    this.removePermission = sqs.removePermission;
+    this.removePermission = sqs.removePermission.bind(sqs);
 
-    this.sendMessage = sqs.sendMessage;
+    this.sendMessage = sqs.sendMessage.bind(sqs);
 
-    this.sendMessageBatch = sqs.sendMessageBatch;
+    this.sendMessageBatch = sqs.sendMessageBatch.bind(sqs);
 
-    this.setQueueAttributes = sqs.setQueueAttributes;
+    this.setQueueAttributes = sqs.setQueueAttributes.bind(sqs);
 
-    this.tagQueue = sqs.tagQueue;
+    this.tagQueue = sqs.tagQueue.bind(sqs);
 
-    this.untagQueue = sqs.untagQueue;
+    this.untagQueue = sqs.untagQueue.bind(sqs);
 };
