@@ -1,0 +1,33 @@
+{
+  "name": "slappforge-sdk-gcp",
+  "version": "0.0.1",
+  "description": "A simple wrapper library for GCP services",
+  "main": "src/index.js",
+  "types": "src/index.d.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/slappforge/slappforge-sdk.git"
+  },
+  "keywords": [
+    "serverless",
+    "gcp",
+    "gcloud",
+    "cloudsql"
+  ],
+  "author": "SLAppForge <info@slappforge.com>",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/slappforge/slappforge-sdk/issues"
+  },
+  "homepage": "https://github.com/slappforge/slappforge-sdk#readme",
+  "dependencies": {
+    "@types/mysql": "^2.15.4",
+    "mysql": "^2.15.0"
+  },
+  "devDependencies": {
+    "nodeunit": "^0.11.2"
+  }
+}
