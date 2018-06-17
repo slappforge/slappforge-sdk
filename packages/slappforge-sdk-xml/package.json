@@ -3,6 +3,7 @@
   "version": "0.0.4",
   "description": "A collection of XML processing utilities that can be used with NodeJS applications.",
   "main": "src/index.js",
+  "types": "src/index.d.ts",
   "scripts": {
     "test": "node node_modules/nodeunit/bin/nodeunit test"
   },
