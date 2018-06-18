@@ -30,17 +30,17 @@ export class Twitter {
 
     /* Tweet related functions */
 
-    getTweet(client: Twit, tweetID: number, callback: Twit.Callback);
+    getTweet(client: Twit, tweetID: string, callback: Twit.Callback);
 
-    getTweet(client: Twit, tweetID: number): Promise<Twit.PromiseResponse>;
+    getTweet(client: Twit, tweetID: string): Promise<Twit.PromiseResponse>;
 
     postTweet(client: Twit, status: string, callback: Twit.Callback);
 
     postTweet(client: Twit, status: string): Promise<Twit.PromiseResponse>;
 
-    deleteTweet(client: Twit, tweetID: number, callback: Twit.Callback);
+    deleteTweet(client: Twit, tweetID: string, callback: Twit.Callback);
 
-    deleteTweet(client: Twit, tweetID: number): Promise<Twit.PromiseResponse>;
+    deleteTweet(client: Twit, tweetID: string): Promise<Twit.PromiseResponse>;
 
     searchTweets(client: Twit, searchParams: SearchParams, callback: Twit.Callback);
 
@@ -48,17 +48,17 @@ export class Twitter {
 
     /* Retweet related functions */
 
-    listRetweets(client: Twit, tweetID: number, callback: Twit.Callback);
+    listRetweets(client: Twit, tweetID: string, callback: Twit.Callback);
 
-    listRetweets(client: Twit, tweetID: number): Promise<Twit.PromiseResponse>;
+    listRetweets(client: Twit, tweetID: string): Promise<Twit.PromiseResponse>;
 
-    createRetweet(client: Twit, tweetID: number, callback: Twit.Callback);
+    createRetweet(client: Twit, tweetID: string, callback: Twit.Callback);
 
-    createRetweet(client: Twit, tweetID: number): Promise<Twit.PromiseResponse>;
+    createRetweet(client: Twit, tweetID: string): Promise<Twit.PromiseResponse>;
 
-    deleteRetweet(client: Twit, tweetID: number, callback: Twit.Callback);
+    deleteRetweet(client: Twit, tweetID: string, callback: Twit.Callback);
 
-    deleteRetweet(client: Twit, tweetID: number): Promise<Twit.PromiseResponse>;
+    deleteRetweet(client: Twit, tweetID: string): Promise<Twit.PromiseResponse>;
 
     /* Likes(favourites) related functions */
 
@@ -66,13 +66,13 @@ export class Twitter {
 
     listLikes(client: Twit): Promise<Twit.PromiseResponse>;
 
-    createLike(client: Twit, tweetID: number, callback: Twit.Callback);
+    createLike(client: Twit, tweetID: string, callback: Twit.Callback);
 
-    createLike(client: Twit, tweetID: number): Promise<Twit.PromiseResponse>;
+    createLike(client: Twit, tweetID: string): Promise<Twit.PromiseResponse>;
 
-    removeLike(client: Twit, tweetID: number, callback: Twit.Callback);
+    removeLike(client: Twit, tweetID: string, callback: Twit.Callback);
 
-    removeLike(client: Twit, tweetID: number): Promise<Twit.PromiseResponse>;
+    removeLike(client: Twit, tweetID: string): Promise<Twit.PromiseResponse>;
 
     /* Custom API related functions */
 

@@ -24,11 +24,11 @@ module.exports = function () {
     /* Client creation functions */
 
     this.createClient = function (options) {
-        return new Twit(configKeys);
+        return new Twit(options);
     };
 
     this.createAdvancedClient = function (advancedOptions) {
-        return new Twit(options);
+        return new Twit(advancedOptions);
     };
 
     /* Tweet related functions */
