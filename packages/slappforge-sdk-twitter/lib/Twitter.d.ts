@@ -32,27 +32,61 @@ export class Twitter {
 
     getTweet(client: Twit, tweetID: number, callback: Twit.Callback);
 
+    getTweet(client: Twit, tweetID: number): Promise<Twit.PromiseResponse>;
+
     postTweet(client: Twit, status: string, callback: Twit.Callback);
+
+    postTweet(client: Twit, status: string): Promise<Twit.PromiseResponse>;
 
     deleteTweet(client: Twit, tweetID: number, callback: Twit.Callback);
 
+    deleteTweet(client: Twit, tweetID: number): Promise<Twit.PromiseResponse>;
+
     searchTweets(client: Twit, searchParams: SearchParams, callback: Twit.Callback);
+
+    searchTweets(client: Twit, searchParams: SearchParams): Promise<Twit.PromiseResponse>;
 
     /* Retweet related functions */
 
     listRetweets(client: Twit, tweetID: number, callback: Twit.Callback);
 
+    listRetweets(client: Twit, tweetID: number): Promise<Twit.PromiseResponse>;
+
     createRetweet(client: Twit, tweetID: number, callback: Twit.Callback);
 
+    createRetweet(client: Twit, tweetID: number): Promise<Twit.PromiseResponse>;
+
     deleteRetweet(client: Twit, tweetID: number, callback: Twit.Callback);
+
+    deleteRetweet(client: Twit, tweetID: number): Promise<Twit.PromiseResponse>;
 
     /* Likes(favourites) related functions */
 
     listLikes(client: Twit, callback: Twit.Callback);
 
+    listLikes(client: Twit): Promise<Twit.PromiseResponse>;
+
     createLike(client: Twit, tweetID: number, callback: Twit.Callback);
 
+    createLike(client: Twit, tweetID: number): Promise<Twit.PromiseResponse>;
+
     removeLike(client: Twit, tweetID: number, callback: Twit.Callback);
+
+    removeLike(client: Twit, tweetID: number): Promise<Twit.PromiseResponse>;
+
+    /* Custom API related functions */
+
+    customGetRequest(client: Twit, path: string, params: Twit.Params, callback: Twit.Callback);
+
+    customGetRequest(client: Twit, path: string, callback: Twit.Callback);
+
+    customGetRequest(client: Twit, path: string, params?: Twit.Params): Promise<Twit.PromiseResponse>;
+
+    customPostRequest(client: Twit, path: string, params: Twit.Params, callback: Twit.Callback);
+
+    customPostRequest(client: Twit, path: string, callback: Twit.Callback);
+
+    customPostRequest(client: Twit, path: string, params?: Twit.Params): Promise<Twit.PromiseResponse>;
 
 }
 
