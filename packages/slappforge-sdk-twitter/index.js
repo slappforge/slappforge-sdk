@@ -15,3 +15,4 @@
  */
 
 exports.Twitter = require('./lib/Twitter');
+exports.TwitterP = require('./lib/TwitterP');

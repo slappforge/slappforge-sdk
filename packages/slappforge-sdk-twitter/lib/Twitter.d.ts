@@ -24,9 +24,9 @@ export class Twitter {
 
     /* Client creation functions */
 
-    createClient(options: ConfigKeys);
+    createClient(options: ConfigKeys): Twit;
 
-    createAdvancedClient(advancedOptions: Options);
+    createAdvancedClient(advancedOptions: Options): Twit;
 
     /* Tweet related functions */
 

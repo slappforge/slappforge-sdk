@@ -15,5 +15,6 @@
  */
 
 export {Twitter} from "./lib/Twitter";
+export {TwitterP} from "./lib/TwitterP";
 
 export as namespace SL;
