@@ -20,11 +20,11 @@
 export class Redis {
     constructor(clusterManager: ClusterManager);
 
-    mset(prams: SETParams, callback: Function);
+    set(prams: SETParams, callback: Function);
 
-    mget(prams: GETParams, callback: Function);
+    get(prams: GETParams, callback: Function);
 
-    delete(prams: DELParams, callback: Function);
+    del(prams: DELParams, callback: Function);
 
 }
 
