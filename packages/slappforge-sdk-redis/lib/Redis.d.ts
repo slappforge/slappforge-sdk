@@ -20,12 +20,29 @@
 export class Redis {
     constructor(clusterManager: ClusterManager);
 
-    set(prams: SETParams, callback: Function);
-
-    get(prams: GETParams, callback: Function);
+    append(prams: APPENDParams, callback: Function);
 
     del(prams: DELParams, callback: Function);
 
+    get(prams: GETParams, callback: Function);
+
+    set(prams: SETParams, callback: Function);
+
+    setex(prams: SETEXParams, callback: Function);
+
+}
+
+interface keyValuePair{
+    key: string,
+    value: string
+}
+
+interface setex extends keyValuePair{
+    seconds: number
+}
+
+interface ClusterManager {
+    clusters: Array<object>;
 }
 
 interface RedisParams {
@@ -33,18 +50,25 @@ interface RedisParams {
     clusterModeEnabled: boolean;
 }
 
-interface SETParams extends RedisParams {
-    keyValuePairs: Array<Object>;
-}
-
-interface GETParams extends RedisParams {
-    keys: Array<string>;
+interface APPENDParams extends RedisParams {
+    keyValuePairs: Array<keyValuePair>;
 }
 
 interface DELParams extends RedisParams {
     keys: Array<string>;
 }
 
-interface ClusterManager {
-    clusters: Array<object>;
+interface GETParams extends RedisParams {
+    keys: Array<string>;
 }
+
+interface SETParams extends RedisParams {
+    keyValuePairs: Array<keyValuePair>;
+}
+
+interface SETEXParams extends RedisParams {
+    keyValuePairs: Array<setex>;
+}
+
+
+

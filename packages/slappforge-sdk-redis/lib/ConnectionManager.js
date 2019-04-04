@@ -14,22 +14,24 @@
  * limitations under the License.
  */
 
+/**
+ * @author Lahiru Ananda
+ */
+
 let redis = require('redis');
 const validatorRegex = "^(MOVED)\\ [0-9]*\\ [0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}:[0-9]{1,5}$";
 
 module.exports = {
 
     connect: function (clusterSpec, redirect, callback) {
-
         let tmpObj = clusterSpec;
         if (redirect) {
             tmpObj.host = redirect.host;
             tmpObj.port = redirect.port;
         }
-
         let redisClient = redis.createClient(tmpObj);
         redisClient.on('ready', () => {
-            callback(null, redisClient);
+            callback(undefined, redisClient);
         });
     },
 

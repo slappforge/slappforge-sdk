@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-let stringCommands = require('./commands/StringCommandsHandler');
-let redisStrings = new stringCommands();
-
+let redisStrings = require('./commands/string/StringCommandsHandler');
+let redisKeys = require('./commands/key/KeyCommandsHandler');
 
 /**
  *
  * https://redis.io/commands
- * http://redis.js.org/#redis-a-nodejs-redis-client-usage-example-sending-commands
  * @author Lahiru Ananda
  */
 module.exports = function (clusterManager) {
@@ -29,41 +27,49 @@ module.exports = function (clusterManager) {
     this.clusters = new clusterManager().clusters;
 
     /**
-     * SET/MSET
-     * Sets the given key to their respective value.
+     * Append a value to a key/multiple values to multiple keys.
      */
-    this.set = function (params, callback) {
+    this.append = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-
-        redisStrings.set(clusterSpec, params, (error, response, redisClient) => {
-            callback(error, response, redisClient);
+        redisStrings.append(clusterSpec, params, (response, redisClient) => {
+            callback(response, redisClient);
         });
     };
-
     /**
-     * GET/MGET
-     * returns array of corresponding values. If the key does not exist null is returned.
-     * An error is returned if the value stored at key is not a string
+     * Get a key/multiple keys.
      */
     this.get = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-
-        redisStrings.get(clusterSpec, params, (error, response, redisClient) => {
-            callback(error, response, redisClient);
+        redisStrings.get(clusterSpec, params, (response, redisClient) => {
+            callback(response, redisClient);
+        });
+    };
+    /**
+     * Set the string value of a key.
+     */
+    this.set = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisStrings.set(clusterSpec, params, (response, redisClient) => {
+            callback(response, redisClient);
+        });
+    };
+    /**
+     * Set the value and expiration of a key/multiple keys.
+     */
+    this.setex = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisStrings.setex(clusterSpec, params, (response, redisClient) => {
+            callback(response, redisClient);
         });
     };
 
     /**
-     * DEL
-     * Returns the number of keys that were removed
-     * Removes the specified key/keys. A key is ignored if it does not exist
+     * Delete a key/multiple keys.
      */
     this.del = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-
-        redisStrings.del(clusterSpec, params, (error, response, redisClient) => {
-            callback(error, response, redisClient);
+        redisKeys.del(clusterSpec, params, (response, redisClient) => {
+            callback(response, redisClient);
         });
     };
-
 };
