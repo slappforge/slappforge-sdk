@@ -20,11 +20,10 @@
 export class Redis {
     constructor(clusterManager: ClusterManager);
 
+    /**strings**/
     append(prams: APPENDParams, callback: Function);
 
     incrby(prams: INCRBYParams, callback: Function);
-
-    del(prams: DELParams, callback: Function);
 
     decrby(prams: DECRBYParams, callback: Function);
 
@@ -34,25 +33,42 @@ export class Redis {
 
     setex(prams: SETEXParams, callback: Function);
 
+    strlen(prams: STRLENParams, callback: Function);
+
+    /**keys**/
+    del(prams: DELParams, callback: Function);
+
+    expire(prams: EXPIREParams, callback: Function);
+
+    persist(prams: PERSISTParams, callback: Function);
+
+    type(prams: TYPEParams, callback: Function);
+
+    rename(prams: RENAMEParams, callback: Function);
+
 }
 
 interface Key{
     key: string,
 }
 
+interface KeyDecrPair extends Key{
+    decrement: number
+}
+
 interface KeyIncrPair extends Key{
     increment: number
 }
 
-interface KeyDecrPair extends Key{
-    decrement: number
+interface KeyNamePair extends Key{
+    name: string
 }
 
 interface KeyValuePair extends Key{
     value: string
 }
 
-interface setex extends KeyValuePair{
+interface KeyTimePair extends KeyValuePair{
     seconds: number
 }
 
@@ -69,16 +85,12 @@ interface APPENDParams extends RedisParams {
     keyValuePairs: Array<KeyValuePair>;
 }
 
-interface INCRBYParams extends RedisParams {
-    keyIncrPairs: Array<KeyIncrPair>;
-}
-
-interface DELParams extends RedisParams {
-    keys: Array<string>;
-}
-
 interface DECRBYParams extends RedisParams {
     keyDecrPairs: Array<KeyDecrPair>;
+}
+
+interface INCRBYParams extends RedisParams {
+    keyIncrPairs: Array<KeyIncrPair>;
 }
 
 interface GETParams extends RedisParams {
@@ -90,7 +102,31 @@ interface SETParams extends RedisParams {
 }
 
 interface SETEXParams extends RedisParams {
-    keyValuePairs: Array<setex>;
+    keyValuePairs: Array<KeyTimePair>;
+}
+
+interface STRLENParams extends RedisParams {
+    keys: Array<string>;
+}
+
+interface DELParams extends RedisParams {
+    keys: Array<KeyTimePair>;
+}
+
+interface EXPIREParams extends RedisParams {
+    keyTimePairs: Array<string>;
+}
+
+interface PERSISTParams extends RedisParams {
+    keys: Array<string>;
+}
+
+interface TYPEParams extends RedisParams {
+    keys: Array<string>;
+}
+
+interface RENAMEParams extends RedisParams {
+    keyNamePairs: Array<KeyNamePair>;
 }
 
 

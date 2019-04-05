@@ -100,6 +100,18 @@ module.exports = {
         });
     },
 
+    strlen: function (command, callback) {
+        connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
+            error ? callback({error: error, result: undefined}) :
+                redisClient.STRLEN(
+                    command.input.key,
+                    (error, response) => {
+                        callback({error: error, result: response}, redisClient);
+                    }
+                );
+        });
+    },
+
     mget: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
             error ? callback(error) :

@@ -80,6 +80,15 @@ module.exports = function (clusterManager) {
             callback(error, response, redisClient);
         });
     };
+    /**
+     * Get the length of the value stored in a key.
+     */
+    this.strlrn = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisStrings.strlen(clusterSpec, params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
 
     /**
      * Delete a key/multiple keys.
@@ -90,4 +99,41 @@ module.exports = function (clusterManager) {
             callback(error, response, redisClient);
         });
     };
+    /**
+     * Set a key's time to live in seconds.
+     */
+    this.expire = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisKeys.expire(clusterSpec, params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
+    /**
+     * Remove the expiration from a key.
+     */
+    this.persist = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisKeys.persist(clusterSpec, params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
+    /**
+     * Determine the type stored at key.
+     */
+    this.type = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisKeys.type(clusterSpec, params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
+    /**
+     * Rename a key.
+     */
+    this.rename = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisKeys.rename(clusterSpec, params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
+
 };

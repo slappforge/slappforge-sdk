@@ -34,4 +34,54 @@ module.exports = {
         });
     },
 
+    expire: function (command, callback) {
+        connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
+            error ? callback({error: error, result: undefined}) :
+                redisClient.EXPIRE(
+                    command.input.key,
+                    command.input.second,
+                    (error, response) => {
+                        callback({error: error, result: response}, redisClient);
+                    }
+                );
+        });
+    },
+
+    persist: function (command, callback) {
+        connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
+            error ? callback({error: error, result: undefined}) :
+                redisClient.PERSIST(
+                    command.input.key,
+                    (error, response) => {
+                        callback({error: error, result: response}, redisClient);
+                    }
+                );
+        });
+    },
+
+    type: function (command, callback) {
+        connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
+            error ? callback({error: error, result: undefined}) :
+                redisClient.TYPE(
+                    command.input.key,
+                    (error, response) => {
+                        callback({error: error, result: response}, redisClient);
+                    }
+                );
+        });
+    },
+
+    rename: function (command, callback) {
+        connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
+            error ? callback({error: error, result: undefined}) :
+                redisClient.RENAME(
+                    command.input.key,
+                    command.input.name,
+                    (error, response) => {
+                        callback({error: error, result: response}, redisClient);
+                    }
+                );
+        });
+    }
+
 };

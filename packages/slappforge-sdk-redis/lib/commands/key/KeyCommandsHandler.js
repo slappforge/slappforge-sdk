@@ -35,6 +35,62 @@ module.exports = {
                 callback(error, response, redisClient);
             }
         );
+    },
+
+    expire: function (clusterSpec, params, callback) {
+        commandsHandler.execute(
+            {
+                type: keyCommands,
+                clusterSpec: clusterSpec,
+                inputs: params.keyTimePairs,
+                operation: 'expire'
+            },
+            (error, response, redisClient) => {
+                callback(error, response, redisClient);
+            }
+        );
+    },
+
+    persist: function (clusterSpec, params, callback) {
+        commandsHandler.execute(
+            {
+                type: keyCommands,
+                clusterSpec: clusterSpec,
+                inputs: params.keys,
+                operation: 'persist'
+            },
+            (error, response, redisClient) => {
+                callback(error, response, redisClient);
+            }
+        );
+    },
+
+    type: function (clusterSpec, params, callback) {
+        commandsHandler.execute(
+            {
+                type: keyCommands,
+                clusterSpec: clusterSpec,
+                inputs: params.keys,
+                operation: 'type'
+            },
+            (error, response, redisClient) => {
+                callback(error, response, redisClient);
+            }
+        );
+    },
+
+    rename: function (clusterSpec, params, callback) {
+        commandsHandler.execute(
+            {
+                type: keyCommands,
+                clusterSpec: clusterSpec,
+                inputs: params.keyNamePairs,
+                operation: 'rename'
+            },
+            (error, response, redisClient) => {
+                callback(error, response, redisClient);
+            }
+        );
     }
 
 };

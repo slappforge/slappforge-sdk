@@ -129,4 +129,18 @@ module.exports = {
         );
     },
 
+    strlen: function (clusterSpec, params, callback) {
+        commandsHandler.execute(
+            {
+                type: stringCommands,
+                clusterSpec: clusterSpec,
+                inputs: params.keys,
+                operation: 'strlen'
+            },
+            (error, response, redisClient) => {
+                callback(error, response, redisClient);
+            }
+        );
+    }
+
 };
