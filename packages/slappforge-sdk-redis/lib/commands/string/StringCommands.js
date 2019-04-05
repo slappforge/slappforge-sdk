@@ -24,7 +24,7 @@ module.exports = {
 
     append: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback(error) :
+            error ? callback({error: error, result: undefined}) :
                 redisClient.APPEND(
                     command.input.key,
                     command.input.value,
@@ -35,9 +35,35 @@ module.exports = {
         });
     },
 
+    decrby: function (command, callback) {
+        connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
+            error ? callback({error: error, result: undefined}) :
+                redisClient.DECRBY(
+                    command.input.key,
+                    command.input.decrement,
+                    (error, response) => {
+                        callback({error: error, result: response}, redisClient);
+                    }
+                );
+        });
+    },
+
+    incrby: function (command, callback) {
+        connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
+            error ? callback({error: error, result: undefined}) :
+                redisClient.INCRBY(
+                    command.input.key,
+                    command.input.increment,
+                    (error, response) => {
+                        callback({error: error, result: response}, redisClient);
+                    }
+                );
+        });
+    },
+
     get: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback(error) :
+            error ? callback({error: error, result: undefined}) :
                 redisClient.GET(
                     command.input,
                     (error, response) => {
@@ -49,7 +75,7 @@ module.exports = {
 
     set: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback(error) :
+            error ? callback({error: error, result: undefined}) :
                 redisClient.SET(
                     command.input.key,
                     command.input.value,
@@ -62,7 +88,7 @@ module.exports = {
 
     setex: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback(error) :
+            error ? callback({error: error, result: undefined}) :
                 redisClient.SETEX(
                     command.input.key,
                     command.input.seconds,
@@ -80,18 +106,25 @@ module.exports = {
                 redisClient.MGET(
                     command.inputs,
                     (error, response) => {
-                        const failed = error ? command.inputs.length : 0;
-                        const results = response.map(value => {
-                            return {
-                                error: error,
-                                result: value
-                            };
-                        });
-                        callback({
-                            results: results,
-                            success: command.inputs.length - failed,
-                            failed: failed
-                        }, redisClient);
+                        if (error)
+                            callback(error);
+                        else {
+                            const results = response.map(value => {
+                                return {
+                                    error: error,
+                                    result: value
+                                };
+                            });
+                            callback(
+                                undefined,
+                                {
+                                    results: results,
+                                    success: command.inputs.length,
+                                    failed: 0
+                                },
+                                redisClient
+                            );
+                        }
                     }
                 );
         });
@@ -104,11 +137,11 @@ module.exports = {
             values.push(keyValuePair.value);
         });
         connectionManager.connect(command.clusterSpec, undefined, (error, redisClient) => {
-            error ? callback(error) :
+            error ? callback(error, {result: undefined}, redisClient) :
                 redisClient.MSET(
                     values,
                     (error, response) => {
-                        callback({error: error, result: response}, redisClient);
+                        callback(error, {results: response}, redisClient);
                     }
                 );
         });

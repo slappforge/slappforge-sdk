@@ -31,8 +31,36 @@ module.exports = {
                 inputs: params.keyValuePairs,
                 operation: 'append'
             },
-            (response, redisClient) => {
-                callback(response, redisClient);
+            (error, response, redisClient) => {
+                callback(error, response, redisClient);
+            }
+        );
+    },
+
+    decrby: function (clusterSpec, params, callback) {
+        commandsHandler.execute(
+            {
+                type: stringCommands,
+                clusterSpec: clusterSpec,
+                inputs: params.keyDecrPairs,
+                operation: 'decrby'
+            },
+            (error, response, redisClient) => {
+                callback(error, response, redisClient);
+            }
+        );
+    },
+
+    incrby: function (clusterSpec, params, callback) {
+        commandsHandler.execute(
+            {
+                type: stringCommands,
+                clusterSpec: clusterSpec,
+                inputs: params.keyIncrPairs,
+                operation: 'incrby'
+            },
+            (error, response, redisClient) => {
+                callback(error, response, redisClient);
             }
         );
     },
@@ -44,8 +72,8 @@ module.exports = {
                     clusterSpec: clusterSpec,
                     inputs: params.keys
                 },
-                (response, redisClient) => {
-                    callback(response, redisClient);
+                (error, response, redisClient) => {
+                    callback(error, response, redisClient);
                 });
         } else {
             commandsHandler.execute(
@@ -55,8 +83,8 @@ module.exports = {
                     inputs: params.keys,
                     operation: 'get'
                 },
-                (response, redisClient) => {
-                    callback(response, redisClient);
+                (error, response, redisClient) => {
+                    callback(error, response, redisClient);
                 }
             );
         }
@@ -69,8 +97,8 @@ module.exports = {
                     clusterSpec: clusterSpec,
                     inputs: params.keyValuePairs
                 },
-                (response, redisClient) => {
-                    callback({results: response}, redisClient);
+                (error, response, redisClient) => {
+                    callback(error, response, redisClient);
                 });
         } else {
             commandsHandler.execute(
@@ -80,8 +108,8 @@ module.exports = {
                     inputs: params.keyValuePairs,
                     operation: 'set'
                 },
-                (response, redisClient) => {
-                    callback(response, redisClient);
+                (error, response, redisClient) => {
+                    callback(error, response, redisClient);
                 }
             );
         }
@@ -95,8 +123,8 @@ module.exports = {
                 inputs: params.keyValuePairs,
                 operation: 'setex'
             },
-            (response, redisClient) => {
-                callback(response, redisClient);
+            (error, response, redisClient) => {
+                callback(error, response, redisClient);
             }
         );
     },

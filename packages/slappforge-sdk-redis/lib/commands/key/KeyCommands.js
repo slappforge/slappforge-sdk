@@ -24,7 +24,7 @@ module.exports = {
 
     del: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback(error) :
+            error ? callback({error: error, result: undefined}) :
                 redisClient.DEL(
                     command.input,
                     (error, response) => {

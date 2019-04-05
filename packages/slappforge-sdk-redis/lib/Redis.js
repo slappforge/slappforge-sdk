@@ -31,8 +31,26 @@ module.exports = function (clusterManager) {
      */
     this.append = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-        redisStrings.append(clusterSpec, params, (response, redisClient) => {
-            callback(response, redisClient);
+        redisStrings.append(clusterSpec, params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
+    /**
+     * Decrement the integer value of a key by the given number.
+     */
+    this.decrby = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisStrings.decrby(clusterSpec, params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
+    /**
+     * Increment the integer value of a key by the given amount.
+     */
+    this.incrby = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisStrings.incrby(clusterSpec, params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
         });
     };
     /**
@@ -40,8 +58,8 @@ module.exports = function (clusterManager) {
      */
     this.get = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-        redisStrings.get(clusterSpec, params, (response, redisClient) => {
-            callback(response, redisClient);
+        redisStrings.get(clusterSpec, params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
         });
     };
     /**
@@ -49,8 +67,8 @@ module.exports = function (clusterManager) {
      */
     this.set = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-        redisStrings.set(clusterSpec, params, (response, redisClient) => {
-            callback(response, redisClient);
+        redisStrings.set(clusterSpec, params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
         });
     };
     /**
@@ -58,8 +76,8 @@ module.exports = function (clusterManager) {
      */
     this.setex = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-        redisStrings.setex(clusterSpec, params, (response, redisClient) => {
-            callback(response, redisClient);
+        redisStrings.setex(clusterSpec, params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
         });
     };
 
@@ -68,8 +86,8 @@ module.exports = function (clusterManager) {
      */
     this.del = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-        redisKeys.del(clusterSpec, params, (response, redisClient) => {
-            callback(response, redisClient);
+        redisKeys.del(clusterSpec, params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
         });
     };
 };

@@ -42,9 +42,10 @@ module.exports = {
                     destination: undefined,
                 },
                 (response, redisClient) => {
-                    responseArray[input] = response;
+                    responseArray[input.key || input] = response;
                     if (response.error) {
-                        connectionManager.validateResponse(error.message, (destination) => {
+                        connectionManager.validateResponse(response.error.message, (destination) => {
+                            responseArray[input.key || input] = response;
                             if (destination) {
                                 redisClient.quit();
                                 type[operation](
@@ -54,36 +55,36 @@ module.exports = {
                                         destination: destination
                                     },
                                     (response, redisClient) => {
-                                        responseArray[input] = response;
-                                        if (response.error) {
-                                            counter--;
+                                        counter--;
+                                        if (response.error)
                                             errCount++;
-                                            return callback();
-                                        } else {
-                                            --counter === 0 ? client = redisClient : redisClient.quit();
-                                            return callback();
-                                        }
+                                        redisClient && counter === 0 ? client = redisClient : redisClient.quit();
+                                        return callback();
+
                                     });
                             } else {
                                 counter--;
                                 errCount++;
+                                redisClient && counter === 0 ? client = redisClient : redisClient.quit();
                                 return callback();
                             }
                         });
                     } else {
-                        --counter === 0 ? client = redisClient : redisClient.quit();
+                        counter--;
+                        redisClient && counter === 0 ? client = redisClient : redisClient.quit();
                         return callback();
                     }
                 });
-        }, () => {
-            let tmpArray = inputs.map((value) => {
-                return responseArray[value];
-            });
-            callback({
-                results: tmpArray,
-                success: inputs.length - errCount,
-                failed: errCount
-            }, client);
+        }, (error) => {
+            callback(
+                error,
+                {
+                    results: inputs.map((value) => {
+                        return responseArray[value.key || value];
+                    }),
+                    success: inputs.length - errCount,
+                    failed: errCount
+                }, client);
         });
     }
 

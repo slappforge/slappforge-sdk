@@ -31,8 +31,8 @@ module.exports = {
                 inputs: params.keys,
                 operation: 'del'
             },
-            (response, redisClient) => {
-                callback(response, redisClient);
+            (error, response, redisClient) => {
+                callback(error, response, redisClient);
             }
         );
     }

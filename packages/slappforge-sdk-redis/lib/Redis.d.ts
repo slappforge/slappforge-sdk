@@ -22,7 +22,11 @@ export class Redis {
 
     append(prams: APPENDParams, callback: Function);
 
+    incrby(prams: INCRBYParams, callback: Function);
+
     del(prams: DELParams, callback: Function);
+
+    decrby(prams: DECRBYParams, callback: Function);
 
     get(prams: GETParams, callback: Function);
 
@@ -32,12 +36,23 @@ export class Redis {
 
 }
 
-interface keyValuePair{
+interface Key{
     key: string,
+}
+
+interface KeyIncrPair extends Key{
+    increment: number
+}
+
+interface KeyDecrPair extends Key{
+    decrement: number
+}
+
+interface KeyValuePair extends Key{
     value: string
 }
 
-interface setex extends keyValuePair{
+interface setex extends KeyValuePair{
     seconds: number
 }
 
@@ -51,11 +66,19 @@ interface RedisParams {
 }
 
 interface APPENDParams extends RedisParams {
-    keyValuePairs: Array<keyValuePair>;
+    keyValuePairs: Array<KeyValuePair>;
+}
+
+interface INCRBYParams extends RedisParams {
+    keyIncrPairs: Array<KeyIncrPair>;
 }
 
 interface DELParams extends RedisParams {
     keys: Array<string>;
+}
+
+interface DECRBYParams extends RedisParams {
+    keyDecrPairs: Array<KeyDecrPair>;
 }
 
 interface GETParams extends RedisParams {
@@ -63,7 +86,7 @@ interface GETParams extends RedisParams {
 }
 
 interface SETParams extends RedisParams {
-    keyValuePairs: Array<keyValuePair>;
+    keyValuePairs: Array<KeyValuePair>;
 }
 
 interface SETEXParams extends RedisParams {
