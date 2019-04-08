@@ -38,10 +38,10 @@ module.exports = {
     validateResponse: function (errorMsg, callback) {
         let regex = new RegExp(validatorRegex);
         if (regex.test(errorMsg)) {
-            let destination = errorMsg.split(" ")[2];
+            let destination = errorMsg.split(" ")[2].split(":");
             callback({
-                host: destination.split(":")[0],
-                port: parseInt(destination.split(":")[1])
+                host: destination[0],
+                port: parseInt(destination[1])
             });
         } else {
             callback(null);

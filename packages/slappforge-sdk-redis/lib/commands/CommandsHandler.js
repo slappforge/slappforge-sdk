@@ -25,67 +25,79 @@ module.exports = {
 
     execute: function (command, callback) {
 
-        const type = command.type;
-        const operation = command.operation;
-        const clusterSpec = command.clusterSpec;
-        const inputs = command.inputs;
+        let type, operation, clusterSpec, params;
+        let errCount = 0, client, counter;
+        let responseArray = [];
 
-        let counter = inputs.length;
-        let errCount = 0;
-        let responseArray = [], client;
+        try {
+            type = command.type;
+            operation = command.operation;
+            clusterSpec = command.clusterSpec;
+            params = command.params;
+            counter = params.length;
+        } catch (error) {
+            errCount++;
+            callback(error);
+        }
 
-        async.forEach(inputs, (input, callback) => {
-            type[operation](
-                {
-                    clusterSpec: clusterSpec,
-                    input: input,
-                    destination: undefined,
-                },
-                (response, redisClient) => {
-                    responseArray[input.key || input] = response;
-                    if (response.error) {
-                        connectionManager.validateResponse(response.error.message, (destination) => {
-                            responseArray[input.key || input] = response;
-                            if (destination) {
-                                redisClient.quit();
-                                type[operation](
-                                    {
-                                        clusterSpec: clusterSpec,
-                                        input: input,
-                                        destination: destination
-                                    },
-                                    (response, redisClient) => {
-                                        counter--;
-                                        if (response.error)
-                                            errCount++;
-                                        redisClient && counter === 0 ? client = redisClient : redisClient.quit();
-                                        return callback();
+        if (errCount === 0) {
+            async.forEach(params, (param, callback) => {
+                type[operation](
+                    {
+                        clusterSpec: clusterSpec,
+                        param: param,
+                        destination: undefined,
+                    },
+                    (response, redisClient) => {
+                        if (response.error) {
+                            connectionManager.validateResponse(response.error.message, (destination) => {
+                                responseArray[param.key || param] = response;
+                                if (destination) {
+                                    redisClient.quit();
+                                    type[operation](
+                                        {
+                                            clusterSpec: clusterSpec,
+                                            param: param,
+                                            destination: destination
+                                        },
+                                        (response, redisClient) => {
+                                            counter--;
+                                            if (response.error)
+                                                errCount++;
+                                            responseArray[param.key || param] = response;
+                                            redisClient && counter === 0 ? client = redisClient : redisClient.quit();
+                                            return callback();
 
-                                    });
-                            } else {
-                                counter--;
-                                errCount++;
-                                redisClient && counter === 0 ? client = redisClient : redisClient.quit();
-                                return callback();
-                            }
-                        });
-                    } else {
-                        counter--;
-                        redisClient && counter === 0 ? client = redisClient : redisClient.quit();
-                        return callback();
-                    }
+                                        });
+                                } else {
+                                    counter--;
+                                    errCount++;
+                                    responseArray[param.key || param] = response;
+                                    redisClient && counter === 0 ? client = redisClient : redisClient.quit();
+                                    return callback();
+                                }
+                            });
+                        } else {
+                            counter--;
+                            responseArray[param.key || param] = response;
+                            redisClient && counter === 0 ? client = redisClient : redisClient.quit();
+                            return callback();
+                        }
+                    });
+            }, () => {
+                let tmpObj = {};
+                params.forEach((param) => {
+                    tmpObj[param.key || param] = responseArray[param.key || param];
                 });
-        }, (error) => {
-            callback(
-                error,
-                {
-                    results: inputs.map((value) => {
-                        return responseArray[value.key || value];
-                    }),
-                    success: inputs.length - errCount,
-                    failed: errCount
-                }, client);
-        });
+                callback(
+                    undefined,
+                    {
+                        results: tmpObj,
+                        success: params.length - errCount,
+                        failed: errCount
+                    }, client);
+            });
+        }
     }
 
 };

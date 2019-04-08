@@ -26,7 +26,7 @@ module.exports = {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
             error ? callback({error: error, result: undefined}) :
                 redisClient.DEL(
-                    command.input,
+                    command.param,
                     (error, response) => {
                         callback({error: error, result: response}, redisClient);
                     }
@@ -38,8 +38,8 @@ module.exports = {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
             error ? callback({error: error, result: undefined}) :
                 redisClient.EXPIRE(
-                    command.input.key,
-                    command.input.second,
+                    command.param.key,
+                    command.param.seconds,
                     (error, response) => {
                         callback({error: error, result: response}, redisClient);
                     }
@@ -51,7 +51,7 @@ module.exports = {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
             error ? callback({error: error, result: undefined}) :
                 redisClient.PERSIST(
-                    command.input.key,
+                    command.param,
                     (error, response) => {
                         callback({error: error, result: response}, redisClient);
                     }
@@ -63,7 +63,7 @@ module.exports = {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
             error ? callback({error: error, result: undefined}) :
                 redisClient.TYPE(
-                    command.input.key,
+                    command.param,
                     (error, response) => {
                         callback({error: error, result: response}, redisClient);
                     }
@@ -75,8 +75,8 @@ module.exports = {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
             error ? callback({error: error, result: undefined}) :
                 redisClient.RENAME(
-                    command.input.key,
-                    command.input.name,
+                    command.param.key,
+                    command.param.name,
                     (error, response) => {
                         callback({error: error, result: response}, redisClient);
                     }

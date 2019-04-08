@@ -31,7 +31,7 @@ module.exports = function (clusterManager) {
      */
     this.append = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-        redisStrings.append(clusterSpec, params, (error, response, redisClient) => {
+        redisStrings.append(clusterSpec, params.params, (error, response, redisClient) => {
             callback(error, response, redisClient);
         });
     };
@@ -40,7 +40,7 @@ module.exports = function (clusterManager) {
      */
     this.decrby = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-        redisStrings.decrby(clusterSpec, params, (error, response, redisClient) => {
+        redisStrings.decrby(clusterSpec, params.params, (error, response, redisClient) => {
             callback(error, response, redisClient);
         });
     };
@@ -49,7 +49,7 @@ module.exports = function (clusterManager) {
      */
     this.incrby = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-        redisStrings.incrby(clusterSpec, params, (error, response, redisClient) => {
+        redisStrings.incrby(clusterSpec, params.params, (error, response, redisClient) => {
             callback(error, response, redisClient);
         });
     };
@@ -58,7 +58,7 @@ module.exports = function (clusterManager) {
      */
     this.get = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-        redisStrings.get(clusterSpec, params, (error, response, redisClient) => {
+        redisStrings.get(clusterSpec, params.params, (error, response, redisClient) => {
             callback(error, response, redisClient);
         });
     };
@@ -67,7 +67,7 @@ module.exports = function (clusterManager) {
      */
     this.set = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-        redisStrings.set(clusterSpec, params, (error, response, redisClient) => {
+        redisStrings.set(clusterSpec, params.params, (error, response, redisClient) => {
             callback(error, response, redisClient);
         });
     };
@@ -76,16 +76,16 @@ module.exports = function (clusterManager) {
      */
     this.setex = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-        redisStrings.setex(clusterSpec, params, (error, response, redisClient) => {
+        redisStrings.setex(clusterSpec, params.params, (error, response, redisClient) => {
             callback(error, response, redisClient);
         });
     };
     /**
      * Get the length of the value stored in a key.
      */
-    this.strlrn = function (params, callback) {
+    this.strlen = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-        redisStrings.strlen(clusterSpec, params, (error, response, redisClient) => {
+        redisStrings.strlen(clusterSpec, params.params, (error, response, redisClient) => {
             callback(error, response, redisClient);
         });
     };
@@ -95,7 +95,7 @@ module.exports = function (clusterManager) {
      */
     this.del = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-        redisKeys.del(clusterSpec, params, (error, response, redisClient) => {
+        redisKeys.del(clusterSpec, params.params, (error, response, redisClient) => {
             callback(error, response, redisClient);
         });
     };
@@ -104,7 +104,7 @@ module.exports = function (clusterManager) {
      */
     this.expire = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-        redisKeys.expire(clusterSpec, params, (error, response, redisClient) => {
+        redisKeys.expire(clusterSpec, params.params, (error, response, redisClient) => {
             callback(error, response, redisClient);
         });
     };
@@ -113,7 +113,7 @@ module.exports = function (clusterManager) {
      */
     this.persist = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-        redisKeys.persist(clusterSpec, params, (error, response, redisClient) => {
+        redisKeys.persist(clusterSpec, params.params, (error, response, redisClient) => {
             callback(error, response, redisClient);
         });
     };
@@ -122,7 +122,7 @@ module.exports = function (clusterManager) {
      */
     this.type = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-        redisKeys.type(clusterSpec, params, (error, response, redisClient) => {
+        redisKeys.type(clusterSpec, params.params, (error, response, redisClient) => {
             callback(error, response, redisClient);
         });
     };

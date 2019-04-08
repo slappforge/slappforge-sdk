@@ -35,7 +35,7 @@ export class Redis {
 
     strlen(prams: STRLENParams, callback: Function);
 
-    /**keys**/
+    /**typeParams**/
     del(prams: DELParams, callback: Function);
 
     expire(prams: EXPIREParams, callback: Function);
@@ -82,47 +82,47 @@ interface RedisParams {
 }
 
 interface APPENDParams extends RedisParams {
-    keyValuePairs: Array<KeyValuePair>;
+    params: Array<KeyValuePair>;
 }
 
 interface DECRBYParams extends RedisParams {
-    keyDecrPairs: Array<KeyDecrPair>;
+    params: Array<KeyDecrPair>;
 }
 
 interface INCRBYParams extends RedisParams {
-    keyIncrPairs: Array<KeyIncrPair>;
+    params: Array<KeyIncrPair>;
 }
 
 interface GETParams extends RedisParams {
-    keys: Array<string>;
+    params: Array<string>;
 }
 
 interface SETParams extends RedisParams {
-    keyValuePairs: Array<KeyValuePair>;
+    params: Array<KeyValuePair>;
 }
 
 interface SETEXParams extends RedisParams {
-    keyValuePairs: Array<KeyTimePair>;
+    params: Array<KeyTimePair>;
 }
 
 interface STRLENParams extends RedisParams {
-    keys: Array<string>;
+    params: Array<string>;
 }
 
 interface DELParams extends RedisParams {
-    keys: Array<KeyTimePair>;
+    params: Array<string>;
 }
 
 interface EXPIREParams extends RedisParams {
-    keyTimePairs: Array<string>;
+    params: Array<KeyTimePair>;
 }
 
 interface PERSISTParams extends RedisParams {
-    keys: Array<string>;
+    params: Array<string>;
 }
 
 interface TYPEParams extends RedisParams {
-    keys: Array<string>;
+    params: Array<string>;
 }
 
 interface RENAMEParams extends RedisParams {

@@ -28,7 +28,7 @@ module.exports = {
             {
                 type: stringCommands,
                 clusterSpec: clusterSpec,
-                inputs: params.keyValuePairs,
+                params: params,
                 operation: 'append'
             },
             (error, response, redisClient) => {
@@ -42,7 +42,7 @@ module.exports = {
             {
                 type: stringCommands,
                 clusterSpec: clusterSpec,
-                inputs: params.keyDecrPairs,
+                params: params,
                 operation: 'decrby'
             },
             (error, response, redisClient) => {
@@ -56,7 +56,7 @@ module.exports = {
             {
                 type: stringCommands,
                 clusterSpec: clusterSpec,
-                inputs: params.keyIncrPairs,
+                params: params,
                 operation: 'incrby'
             },
             (error, response, redisClient) => {
@@ -70,7 +70,7 @@ module.exports = {
             stringCommands.mget(
                 {
                     clusterSpec: clusterSpec,
-                    inputs: params.keys
+                    params: params
                 },
                 (error, response, redisClient) => {
                     callback(error, response, redisClient);
@@ -80,7 +80,7 @@ module.exports = {
                 {
                     type: stringCommands,
                     clusterSpec: clusterSpec,
-                    inputs: params.keys,
+                    params: params,
                     operation: 'get'
                 },
                 (error, response, redisClient) => {
@@ -95,7 +95,7 @@ module.exports = {
             stringCommands.mset(
                 {
                     clusterSpec: clusterSpec,
-                    inputs: params.keyValuePairs
+                    params: params
                 },
                 (error, response, redisClient) => {
                     callback(error, response, redisClient);
@@ -105,7 +105,7 @@ module.exports = {
                 {
                     type: stringCommands,
                     clusterSpec: clusterSpec,
-                    inputs: params.keyValuePairs,
+                    params: params,
                     operation: 'set'
                 },
                 (error, response, redisClient) => {
@@ -120,7 +120,7 @@ module.exports = {
             {
                 type: stringCommands,
                 clusterSpec: clusterSpec,
-                inputs: params.keyValuePairs,
+                params: params,
                 operation: 'setex'
             },
             (error, response, redisClient) => {
@@ -134,7 +134,7 @@ module.exports = {
             {
                 type: stringCommands,
                 clusterSpec: clusterSpec,
-                inputs: params.keys,
+                params: params,
                 operation: 'strlen'
             },
             (error, response, redisClient) => {

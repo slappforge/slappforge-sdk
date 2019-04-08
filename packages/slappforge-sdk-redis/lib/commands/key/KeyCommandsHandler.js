@@ -28,7 +28,7 @@ module.exports = {
             {
                 type: keyCommands,
                 clusterSpec: clusterSpec,
-                inputs: params.keys,
+                params: params,
                 operation: 'del'
             },
             (error, response, redisClient) => {
@@ -42,7 +42,7 @@ module.exports = {
             {
                 type: keyCommands,
                 clusterSpec: clusterSpec,
-                inputs: params.keyTimePairs,
+                params: params,
                 operation: 'expire'
             },
             (error, response, redisClient) => {
@@ -56,7 +56,7 @@ module.exports = {
             {
                 type: keyCommands,
                 clusterSpec: clusterSpec,
-                inputs: params.keys,
+                params: params,
                 operation: 'persist'
             },
             (error, response, redisClient) => {
@@ -70,7 +70,7 @@ module.exports = {
             {
                 type: keyCommands,
                 clusterSpec: clusterSpec,
-                inputs: params.keys,
+                params: params,
                 operation: 'type'
             },
             (error, response, redisClient) => {
@@ -84,7 +84,7 @@ module.exports = {
             {
                 type: keyCommands,
                 clusterSpec: clusterSpec,
-                inputs: params.keyNamePairs,
+                params: params,
                 operation: 'rename'
             },
             (error, response, redisClient) => {
