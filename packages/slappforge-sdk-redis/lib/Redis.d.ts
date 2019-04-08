@@ -46,6 +46,28 @@ export class Redis {
 
     rename(prams: RENAMEParams, callback: Function);
 
+    /**sets**/
+    sadd(prams: SADDParams, callback: Function);
+
+    scard(prams: SCARDParams, callback: Function);
+
+    sdiff(prams: SDIFFParams, callback: Function);
+
+    sdiffstore(prams: SDIFFSTOREParams, callback: Function);
+
+    sinter(prams: SINTERParams, callback: Function);
+
+    sinterstore(prams: SINTERSTOREParams, callback: Function);
+
+    sismember(prams: SISMEMBERParams, callback: Function);
+
+    smembers(prams: SMEMBERSParams, callback: Function);
+
+    srem(prams: SREMParams, callback: Function);
+
+    sunion(prams: SUNIONParams, callback: Function);
+
+    sunionstore(prams: SUNIONSTOREParams, callback: Function);
 }
 
 interface Key{
@@ -66,6 +88,10 @@ interface KeyNamePair extends Key{
 
 interface KeyValuePair extends Key{
     value: string
+}
+
+interface KeyValuesArray extends Key{
+    values: Array<any>;
 }
 
 interface KeyTimePair extends KeyValuePair{
@@ -126,7 +152,51 @@ interface TYPEParams extends RedisParams {
 }
 
 interface RENAMEParams extends RedisParams {
-    keyNamePairs: Array<KeyNamePair>;
+    params: Array<KeyNamePair>;
+}
+
+interface SADDParams extends RedisParams {
+    params: Array<KeyValuesArray>;
+}
+
+interface SCARDParams extends RedisParams {
+    params: Array<string>;
+}
+
+interface SDIFFParams extends RedisParams {
+    params: Array<KeyValuesArray>;
+}
+
+interface SDIFFSTOREParams extends RedisParams {
+    params: Array<KeyValuesArray>;
+}
+
+interface SINTERParams extends RedisParams {
+    params: Array<KeyValuesArray>;
+}
+
+interface SINTERSTOREParams extends RedisParams {
+    params: Array<KeyValuesArray>;
+}
+
+interface SISMEMBERParams extends RedisParams {
+    params: Array<KeyValuesArray>;
+}
+
+interface SMEMBERSParams extends RedisParams {
+    params: Array<string>;
+}
+
+interface SREMParams extends RedisParams {
+    params: Array<KeyValuesArray>;
+}
+
+interface SUNIONParams extends RedisParams {
+    params: Array<KeyValuesArray>;
+}
+
+interface SUNIONSTOREParams extends RedisParams {
+    params: Array<KeyValuesArray>;
 }
 
 

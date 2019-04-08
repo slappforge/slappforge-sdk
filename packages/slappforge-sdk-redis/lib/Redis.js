@@ -14,8 +14,9 @@
  * limitations under the License.
  */
 
-let redisStrings = require('./commands/string/StringCommandsHandler');
-let redisKeys = require('./commands/key/KeyCommandsHandler');
+let redisStrings = require('./commands/strings/StringCommandsHandler');
+let redisKeys = require('./commands/keys/KeyCommandsHandler');
+let redisSets = require('./commands/sets/SetCommandsHandler');
 
 /**
  *
@@ -131,9 +132,108 @@ module.exports = function (clusterManager) {
      */
     this.rename = function (params, callback) {
         let clusterSpec = this.clusters[params.clusterIdentifier];
-        redisKeys.rename(clusterSpec, params, (error, response, redisClient) => {
+        redisKeys.rename(clusterSpec, params.params, (error, response, redisClient) => {
             callback(error, response, redisClient);
         });
     };
 
+    /**
+     * Append one or multiple members to a set.
+     */
+    this.sadd = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisSets.sadd(clusterSpec, params.params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
+    /**
+     * Get the number of members in a set.
+     */
+    this.scard = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisSets.scard(clusterSpec, params.params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
+    /**
+     * Subtract multiple sets.
+     */
+    this.sdiff = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisSets.sdiff(clusterSpec, params.params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
+    /**
+     * Subtract multiple sets and store the resulting set in a key.
+     */
+    this.sdiffstore = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisSets.sdiffstore(clusterSpec, params.params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
+    /**
+     * Intersect multiple sets.
+     */
+    this.sinter = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisSets.sinter(clusterSpec, params.params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
+    /**
+     * Intersect multiple sets and store the resulting set in a key.
+     */
+    this.sinterstore = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisSets.sinterstore(clusterSpec, params.params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
+    /**
+     * Determine if a given value is a member of a set.
+     */
+    this.sismember = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisSets.sismember(clusterSpec, params.params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
+    /**
+     * Get all the members in a set.
+     */
+    this.smembers = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisSets.smembers(clusterSpec, params.params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
+    /**
+     * Remove one or more members from a set.
+     */
+    this.srem = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisSets.srem(clusterSpec, params.params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
+    /**
+     * Add multiple sets.
+     */
+    this.sunion = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisSets.sunion(clusterSpec, params.params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
+    /**
+     * Add multiple sets and store the resulting set in a key.
+     */
+    this.sunionstore = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisSets.sunionstore(clusterSpec, params.params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
 };

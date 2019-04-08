@@ -23,7 +23,7 @@ let connectionManager = require('../ConnectionManager');
 
 module.exports = {
 
-    execute: function (command, callback) {
+    run: function (command, callback) {
 
         let type, operation, clusterSpec, params;
         let errCount = 0, client, counter;
@@ -98,6 +98,5 @@ module.exports = {
                     }, client);
             });
         }
-    }
-
+    },
 };
