@@ -20,11 +20,12 @@
 
 let keyCommands = require('./KeyCommands');
 let commandsHandler = require('../CommandsHandler');
+let handler = new commandsHandler();
 
 module.exports = {
 
     del: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: keyCommands,
                 clusterSpec: clusterSpec,
@@ -38,7 +39,7 @@ module.exports = {
     },
 
     expire: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: keyCommands,
                 clusterSpec: clusterSpec,
@@ -52,7 +53,7 @@ module.exports = {
     },
 
     persist: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: keyCommands,
                 clusterSpec: clusterSpec,
@@ -66,7 +67,7 @@ module.exports = {
     },
 
     type: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: keyCommands,
                 clusterSpec: clusterSpec,
@@ -80,7 +81,7 @@ module.exports = {
     },
 
     rename: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: keyCommands,
                 clusterSpec: clusterSpec,

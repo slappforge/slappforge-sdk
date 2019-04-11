@@ -21,82 +21,120 @@
 let async = require('async');
 let connectionManager = require('../ConnectionManager');
 
-module.exports = {
+module.exports = function () {
 
-    run: function (command, callback) {
-
-        let type, operation, clusterSpec, params;
-        let errCount = 0, client, counter;
+    this.execute = function (command, callback) {
+        let params, client, counter, errCount = 0;
         let responseArray = [];
-
         try {
-            type = command.type;
-            operation = command.operation;
-            clusterSpec = command.clusterSpec;
             params = command.params;
             counter = params.length;
-        } catch (error) {
-            errCount++;
-            callback(error);
-        }
-
-        if (errCount === 0) {
             async.forEach(params, (param, callback) => {
-                type[operation](
-                    {
-                        clusterSpec: clusterSpec,
-                        param: param,
-                        destination: undefined,
-                    },
+                handle(
+                    command.type,
+                    command.operation,
+                    command.clusterSpec,
+                    param,
                     (response, redisClient) => {
-                        if (response.error) {
-                            connectionManager.validateResponse(response.error.message, (destination) => {
-                                responseArray[param.key || param] = response;
-                                if (destination) {
-                                    redisClient.quit();
-                                    type[operation](
-                                        {
-                                            clusterSpec: clusterSpec,
-                                            param: param,
-                                            destination: destination
-                                        },
-                                        (response, redisClient) => {
-                                            counter--;
-                                            if (response.error)
-                                                errCount++;
-                                            responseArray[param.key || param] = response;
-                                            redisClient && counter === 0 ? client = redisClient : redisClient.quit();
-                                            return callback();
-
-                                        });
-                                } else {
-                                    counter--;
-                                    errCount++;
-                                    responseArray[param.key || param] = response;
-                                    redisClient && counter === 0 ? client = redisClient : redisClient.quit();
-                                    return callback();
-                                }
-                            });
-                        } else {
-                            counter--;
-                            responseArray[param.key || param] = response;
-                            redisClient && counter === 0 ? client = redisClient : redisClient.quit();
-                            return callback();
-                        }
+                        counter--;
+                        if (response.error)
+                            errCount++;
+                        redisClient && counter === 0 ? client = redisClient : redisClient.quit();
+                        responseArray[param.key || param] = response;
+                        return callback();
                     });
             }, () => {
-                let tmpObj = {};
-                params.forEach((param) => {
-                    tmpObj[param.key || param] = responseArray[param.key || param];
-                });
                 callback(
                     undefined,
                     {
-                        results: tmpObj,
+                        results: responseArray,
                         success: params.length - errCount,
                         failed: errCount
                     }, client);
             });
+        } catch (error) {
+            callback(error);
         }
-    },
+    };
+
+    this.setExecute = function (command, callback) {
+        let client, errCount = 0, inputCount = 0;
+        let responseArray = [];
+        try {
+            let outerCounter = command.params.length;
+            async.forEach(command.params, (param, callback) => {
+                let innerCounter = param.values.length, resObj = {};
+                inputCount += param.values.length;
+                async.forEach(param.values,
+                    (value, callback) => {
+                        handle(
+                            command.type,
+                            command.operation,
+                            command.clusterSpec,
+                            {
+                                key: param.key,
+                                value: value
+                            },
+                            (response, redisClient) => {
+                                if(--innerCounter === 0)
+                                    outerCounter--;
+                                if (response.error)
+                                    errCount++;
+                                redisClient && outerCounter === 0
+                                    ? client = redisClient
+                                    : redisClient.quit();
+                                resObj[value] = response;
+                                return callback();
+                            });
+                    },
+                    () => {
+                        responseArray[param.key] = resObj;
+                        return callback();
+                    }
+                );
+            }, () => {
+                callback(
+                    undefined,
+                    {
+                        results: responseArray,
+                        success: inputCount - errCount,
+                        failed: errCount
+                    }, client);
+            });
+        } catch (error) {
+            callback(error);
+        }
+    };
+
+    const handle = function (type, operation, clusterSpec, param, callback) {
+        type[operation](
+            {
+                clusterSpec: clusterSpec,
+                param: param,
+                destination: undefined,
+            },
+            (response, redisClient) => {
+                if (response.error) {
+                    connectionManager.validateResponse(response.error.message, (destination) => {
+                        if (destination) {
+                            redisClient.quit();
+                            type[operation](
+                                {
+                                    clusterSpec: clusterSpec,
+                                    param: param,
+                                    destination: destination
+                                },
+                                (response, redisClient) => {
+                                    callback(response, redisClient);
+
+                                });
+                        } else {
+                            callback(response, redisClient);
+                        }
+                    });
+                } else {
+                    callback(response, redisClient);
+                }
+            });
+    }
 };

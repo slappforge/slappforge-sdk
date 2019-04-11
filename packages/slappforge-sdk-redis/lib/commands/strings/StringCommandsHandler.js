@@ -20,11 +20,12 @@
 
 let stringCommands = require('./StringCommands');
 let commandsHandler = require('../CommandsHandler');
+let handler = new commandsHandler();
 
 module.exports = {
 
     append: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: stringCommands,
                 clusterSpec: clusterSpec,
@@ -38,7 +39,7 @@ module.exports = {
     },
 
     decrby: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: stringCommands,
                 clusterSpec: clusterSpec,
@@ -52,7 +53,7 @@ module.exports = {
     },
 
     incrby: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: stringCommands,
                 clusterSpec: clusterSpec,
@@ -76,7 +77,7 @@ module.exports = {
                     callback(error, response, redisClient);
                 });
         } else {
-            commandsHandler.run(
+            handler.execute(
                 {
                     type: stringCommands,
                     clusterSpec: clusterSpec,
@@ -101,7 +102,7 @@ module.exports = {
                     callback(error, response, redisClient);
                 });
         } else {
-            commandsHandler.run(
+            handler.execute(
                 {
                     type: stringCommands,
                     clusterSpec: clusterSpec,
@@ -116,7 +117,7 @@ module.exports = {
     },
 
     setex: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: stringCommands,
                 clusterSpec: clusterSpec,
@@ -130,7 +131,7 @@ module.exports = {
     },
 
     strlen: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: stringCommands,
                 clusterSpec: clusterSpec,

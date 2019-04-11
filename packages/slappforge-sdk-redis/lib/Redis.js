@@ -210,6 +210,15 @@ module.exports = function (clusterManager) {
         });
     };
     /**
+     * Move a member from one set to another.
+     */
+    this.smove = function (params, callback) {
+        let clusterSpec = this.clusters[params.clusterIdentifier];
+        redisSets.smove(clusterSpec, params.params, (error, response, redisClient) => {
+            callback(error, response, redisClient);
+        });
+    };
+    /**
      * Remove one or more members from a set.
      */
     this.srem = function (params, callback) {

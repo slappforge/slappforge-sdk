@@ -20,11 +20,12 @@
 
 let setCommands = require('./SetCommands');
 let commandsHandler = require('../CommandsHandler');
+let handler = new commandsHandler();
 
 module.exports = {
 
     sadd: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.setExecute(
             {
                 type: setCommands,
                 clusterSpec: clusterSpec,
@@ -38,7 +39,7 @@ module.exports = {
     },
 
     scard: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: setCommands,
                 clusterSpec: clusterSpec,
@@ -52,7 +53,7 @@ module.exports = {
     },
 
     sdiff: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: setCommands,
                 clusterSpec: clusterSpec,
@@ -66,7 +67,7 @@ module.exports = {
     },
 
     sdiffstore: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: setCommands,
                 clusterSpec: clusterSpec,
@@ -80,7 +81,7 @@ module.exports = {
     },
 
     sinter: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: setCommands,
                 clusterSpec: clusterSpec,
@@ -94,7 +95,7 @@ module.exports = {
     },
 
     sinterstore: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: setCommands,
                 clusterSpec: clusterSpec,
@@ -108,7 +109,7 @@ module.exports = {
     },
 
     sismember: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.setExecute(
             {
                 type: setCommands,
                 clusterSpec: clusterSpec,
@@ -122,7 +123,7 @@ module.exports = {
     },
 
     smembers: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: setCommands,
                 clusterSpec: clusterSpec,
@@ -135,8 +136,22 @@ module.exports = {
         );
     },
 
+    smove: function (clusterSpec, params, callback) {
+        handler.execute(
+            {
+                type: setCommands,
+                clusterSpec: clusterSpec,
+                params: params,
+                operation: 'smove'
+            },
+            (error, response, redisClient) => {
+                callback(error, response, redisClient);
+            }
+        );
+    },
+
     srem: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.setExecute(
             {
                 type: setCommands,
                 clusterSpec: clusterSpec,
@@ -150,7 +165,7 @@ module.exports = {
     },
 
     sunion: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: setCommands,
                 clusterSpec: clusterSpec,
@@ -164,7 +179,7 @@ module.exports = {
     },
 
     sunionstore: function (clusterSpec, params, callback) {
-        commandsHandler.run(
+        handler.execute(
             {
                 type: setCommands,
                 clusterSpec: clusterSpec,

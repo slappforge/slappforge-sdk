@@ -21,53 +21,55 @@ export class Redis {
     constructor(clusterManager: ClusterManager);
 
     /**strings**/
-    append(prams: APPENDParams, callback: Function);
+    append(params: APPENDParams, callback: Function);
 
-    incrby(prams: INCRBYParams, callback: Function);
+    incrby(params: INCRBYParams, callback: Function);
 
-    decrby(prams: DECRBYParams, callback: Function);
+    decrby(params: DECRBYParams, callback: Function);
 
-    get(prams: GETParams, callback: Function);
+    get(params: GETParams, callback: Function);
 
-    set(prams: SETParams, callback: Function);
+    set(params: SETParams, callback: Function);
 
-    setex(prams: SETEXParams, callback: Function);
+    setex(params: SETEXParams, callback: Function);
 
-    strlen(prams: STRLENParams, callback: Function);
+    strlen(params: STRLENParams, callback: Function);
 
     /**typeParams**/
-    del(prams: DELParams, callback: Function);
+    del(params: DELParams, callback: Function);
 
-    expire(prams: EXPIREParams, callback: Function);
+    expire(params: EXPIREParams, callback: Function);
 
-    persist(prams: PERSISTParams, callback: Function);
+    persist(params: PERSISTParams, callback: Function);
 
-    type(prams: TYPEParams, callback: Function);
+    type(params: TYPEParams, callback: Function);
 
-    rename(prams: RENAMEParams, callback: Function);
+    rename(params: RENAMEParams, callback: Function);
 
     /**sets**/
-    sadd(prams: SADDParams, callback: Function);
+    sadd(params: SADDParams, callback: Function);
 
-    scard(prams: SCARDParams, callback: Function);
+    scard(params: SCARDParams, callback: Function);
 
-    sdiff(prams: SDIFFParams, callback: Function);
+    sdiff(params: SDIFFParams, callback: Function);
 
-    sdiffstore(prams: SDIFFSTOREParams, callback: Function);
+    sdiffstore(params: SDIFFSTOREParams, callback: Function);
 
-    sinter(prams: SINTERParams, callback: Function);
+    sinter(params: SINTERParams, callback: Function);
 
-    sinterstore(prams: SINTERSTOREParams, callback: Function);
+    sinterstore(params: SINTERSTOREParams, callback: Function);
 
-    sismember(prams: SISMEMBERParams, callback: Function);
+    sismember(params: SISMEMBERParams, callback: Function);
 
-    smembers(prams: SMEMBERSParams, callback: Function);
+    smembers(params: SMEMBERSParams, callback: Function);
 
-    srem(prams: SREMParams, callback: Function);
+    smove(params: SMOVEParams, callback: Function);
 
-    sunion(prams: SUNIONParams, callback: Function);
+    srem(params: SREMParams, callback: Function);
 
-    sunionstore(prams: SUNIONSTOREParams, callback: Function);
+    sunion(params: SUNIONParams, callback: Function);
+
+    sunionstore(params: SUNIONSTOREParams, callback: Function);
 }
 
 interface Key{
@@ -94,8 +96,16 @@ interface KeyValuesArray extends Key{
     values: Array<any>;
 }
 
-interface KeyTimePair extends KeyValuePair{
+interface KeyTimePair extends Key{
     seconds: number
+}
+
+interface KeyValueTimePair extends KeyValuePair{
+    seconds: number
+}
+
+interface KeyDesPair extends KeyValuePair{
+    destination: number
 }
 
 interface ClusterManager {
@@ -128,7 +138,7 @@ interface SETParams extends RedisParams {
 }
 
 interface SETEXParams extends RedisParams {
-    params: Array<KeyTimePair>;
+    params: Array<KeyValueTimePair>;
 }
 
 interface STRLENParams extends RedisParams {
@@ -185,6 +195,10 @@ interface SISMEMBERParams extends RedisParams {
 
 interface SMEMBERSParams extends RedisParams {
     params: Array<string>;
+}
+
+interface SMOVEParams extends RedisParams {
+    params: Array<KeyDesPair>;
 }
 
 interface SREMParams extends RedisParams {
