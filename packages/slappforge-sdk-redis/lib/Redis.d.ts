@@ -113,6 +113,7 @@ interface ClusterManager {
 }
 
 interface RedisParams {
+    redisClient: object;
     clusterIdentifier: string;
     clusterModeEnabled: boolean;
 }

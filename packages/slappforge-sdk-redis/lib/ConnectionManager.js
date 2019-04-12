@@ -24,15 +24,19 @@ const validatorRegex = "^(MOVED)\\ [0-9]*\\ [0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}
 module.exports = {
 
     connect: function (clusterSpec, redirect, callback) {
-        let tmpObj = clusterSpec;
-        if (redirect) {
-            tmpObj.host = redirect.host;
-            tmpObj.port = redirect.port;
+        if(clusterSpec.redisClient){
+            callback(undefined, clusterSpec.redisClient)
+        } else {
+            let tmpObj = clusterSpec;
+            if (redirect) {
+                tmpObj.host = redirect.host;
+                tmpObj.port = redirect.port;
+            }
+            let redisClient = redis.createClient(tmpObj);
+            redisClient.on('ready', () => {
+                callback(undefined, redisClient);
+            });
         }
-        let redisClient = redis.createClient(tmpObj);
-        redisClient.on('ready', () => {
-            callback(undefined, redisClient);
-        });
     },
 
     validateResponse: function (errorMsg, callback) {

@@ -76,13 +76,10 @@ module.exports = function () {
                                 value: value
                             },
                             (response, redisClient) => {
-                                if(--innerCounter === 0)
-                                    outerCounter--;
-                                if (response.error)
-                                    errCount++;
-                                redisClient && outerCounter === 0
-                                    ? client = redisClient
-                                    : redisClient.quit();
+                                --innerCounter === 0 ? outerCounter-- : null;
+                                response.error ? errCount++ : null;
+                                redisClient && outerCounter === 0 ?
+                                    client = redisClient : redisClient.quit();
                                 resObj[value] = response;
                                 return callback();
                             });
@@ -120,7 +117,7 @@ module.exports = function () {
                             redisClient.quit();
                             type[operation](
                                 {
-                                    clusterSpec: clusterSpec,
+                                    clusterSpec: {...clusterSpec, redisClient: undefined},
                                     param: param,
                                     destination: destination
                                 },
