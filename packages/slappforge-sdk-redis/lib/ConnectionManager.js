@@ -24,7 +24,7 @@ const validatorRegex = "^(MOVED)\\ [0-9]*\\ [0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}
 module.exports = {
 
     connect: function (clusterSpec, redirect, callback) {
-        if(clusterSpec.redisClient){
+        if (clusterSpec.redisClient) {
             callback(undefined, clusterSpec.redisClient)
         } else {
             let tmpObj = clusterSpec;

@@ -123,7 +123,6 @@ module.exports = function () {
                                 },
                                 (response, redisClient) => {
                                     callback(response, redisClient);
-
                                 });
                         } else {
                             callback(response, redisClient);
@@ -132,6 +131,7 @@ module.exports = function () {
                 } else {
                     callback(response, redisClient);
                 }
-            });
+            }
+        );
     }
 };

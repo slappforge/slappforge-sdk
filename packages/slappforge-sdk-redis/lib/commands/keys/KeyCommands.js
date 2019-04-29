@@ -24,7 +24,7 @@ module.exports = {
 
     del: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback({error: error, result: undefined}) :
+            error ? callback({error: error, result: null}) :
                 redisClient.DEL(
                     command.param,
                     (error, response) => {
@@ -36,7 +36,7 @@ module.exports = {
 
     expire: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback({error: error, result: undefined}) :
+            error ? callback({error: error, result: null}) :
                 redisClient.EXPIRE(
                     command.param.key,
                     command.param.seconds,
@@ -49,7 +49,7 @@ module.exports = {
 
     persist: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback({error: error, result: undefined}) :
+            error ? callback({error: error, result: null}) :
                 redisClient.PERSIST(
                     command.param,
                     (error, response) => {
@@ -61,7 +61,7 @@ module.exports = {
 
     type: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback({error: error, result: undefined}) :
+            error ? callback({error: error, result: null}) :
                 redisClient.TYPE(
                     command.param,
                     (error, response) => {
@@ -73,7 +73,7 @@ module.exports = {
 
     rename: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback({error: error, result: undefined}) :
+            error ? callback({error: error, result: null}) :
                 redisClient.RENAME(
                     command.param.key,
                     command.param.name,

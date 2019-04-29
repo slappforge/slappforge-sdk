@@ -26,7 +26,7 @@ module.exports = {
 
     sadd: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback({error: error, result: undefined}) :
+            error ? callback({error: error, result: null}) :
                 redisClient.SADD(
                     `${HASH_SLOT}${command.param.key}`,
                     command.param.value,
@@ -39,7 +39,7 @@ module.exports = {
 
     scard: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback({error: error, result: undefined}) :
+            error ? callback({error: error, result: null}) :
                 redisClient.SCARD(
                     `${HASH_SLOT}${command.param}`,
                     (error, response) => {
@@ -51,7 +51,7 @@ module.exports = {
 
     sdiff: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback({error: error, result: undefined}) :
+            error ? callback({error: error, result: null}) :
                 redisClient.SDIFF(
                     `${HASH_SLOT}${command.param.key}`,
                     command.param.values.map((value) => {
@@ -67,7 +67,7 @@ module.exports = {
 
     sdiffstore: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback({error: error, result: undefined}) :
+            error ? callback({error: error, result: null}) :
                 redisClient.SDIFFSTORE(
                     `${HASH_SLOT}${command.param.key}`,
                     command.param.values.map((value) => {
@@ -83,7 +83,7 @@ module.exports = {
 
     sinter: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback({error: error, result: undefined}) :
+            error ? callback({error: error, result: null}) :
                 redisClient.SINTER(
                     `${HASH_SLOT}${command.param.key}`,
                     command.param.values.map((value) => {
@@ -98,7 +98,7 @@ module.exports = {
 
     sinterstore: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback({error: error, result: undefined}) :
+            error ? callback({error: error, result: null}) :
                 redisClient.SINTERSTORE(
                     `${HASH_SLOT}${command.param.key}`,
                     command.param.values.map((value) => {
@@ -114,7 +114,7 @@ module.exports = {
 
     sismember: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback({error: error, result: undefined}) :
+            error ? callback({error: error, result: null}) :
                 redisClient.SISMEMBER(
                     `${HASH_SLOT}${command.param.key}`,
                     command.param.value,
@@ -127,7 +127,7 @@ module.exports = {
 
     smembers: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback({error: error, result: undefined}) :
+            error ? callback({error: error, result: null}) :
                 redisClient.SMEMBERS(
                     `${HASH_SLOT}${command.param}`,
                     (error, response) => {
@@ -139,7 +139,7 @@ module.exports = {
 
     smove: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback({error: error, result: undefined}) :
+            error ? callback({error: error, result: null}) :
                 redisClient.SMOVE(
                     `${HASH_SLOT}${command.param.key}`,
                     `${HASH_SLOT}${command.param.destination}`,
@@ -153,7 +153,7 @@ module.exports = {
 
     srem: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback({error: error, result: undefined}) :
+            error ? callback({error: error, result: null}) :
                 redisClient.SREM(
                     `${HASH_SLOT}${command.param.key}`,
                     command.param.value,
@@ -166,7 +166,7 @@ module.exports = {
 
     sunion: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback({error: error, result: undefined}) :
+            error ? callback({error: error, result: null}) :
                 redisClient.SUNION(
                     `${HASH_SLOT}${command.param.key}`,
                     command.param.values.map((value) => {
@@ -182,7 +182,7 @@ module.exports = {
 
     sunionstore: function (command, callback) {
         connectionManager.connect(command.clusterSpec, command.destination, (error, redisClient) => {
-            error ? callback({error: error, result: undefined}) :
+            error ? callback({error: error, result: null}) :
                 redisClient.SUNIONSTORE(
                     `${HASH_SLOT}${command.param.key}`,
                     command.param.values.map((value) => {
