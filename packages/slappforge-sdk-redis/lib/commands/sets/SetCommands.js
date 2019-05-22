@@ -20,6 +20,10 @@
 
 let connectionManager = require('../../ConnectionManager');
 
+/*
+HASH_SLOT used to map set keys/identifiers into one hash slot. Otherwise inter set operations
+between sets belongs to different hash slots will throw CROSSSLOT exception
+*/
 const HASH_SLOT = '{hash-slot-identifier}';
 
 module.exports = {

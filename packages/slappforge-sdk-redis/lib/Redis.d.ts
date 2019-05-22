@@ -20,7 +20,7 @@
 export class Redis {
     constructor(clusterManager: ClusterManager);
 
-    /**strings**/
+    //string
     append(params: APPENDParams, callback: Function);
 
     incrby(params: INCRBYParams, callback: Function);
@@ -35,7 +35,7 @@ export class Redis {
 
     strlen(params: STRLENParams, callback: Function);
 
-    /**typeParams**/
+    //type
     del(params: DELParams, callback: Function);
 
     expire(params: EXPIREParams, callback: Function);
@@ -46,7 +46,7 @@ export class Redis {
 
     rename(params: RENAMEParams, callback: Function);
 
-    /**sets**/
+    //sets
     sadd(params: SADDParams, callback: Function);
 
     scard(params: SCARDParams, callback: Function);
@@ -72,39 +72,39 @@ export class Redis {
     sunionstore(params: SUNIONSTOREParams, callback: Function);
 }
 
-interface Key{
+interface Key {
     key: string,
 }
 
-interface KeyDecrPair extends Key{
+interface KeyDecrPair extends Key {
     decrement: number
 }
 
-interface KeyIncrPair extends Key{
+interface KeyIncrPair extends Key {
     increment: number
 }
 
-interface KeyNamePair extends Key{
+interface KeyNamePair extends Key {
     name: string
 }
 
-interface KeyValuePair extends Key{
+interface KeyValuePair extends Key {
     value: string
 }
 
-interface KeyValuesArray extends Key{
+interface KeyValuesArray extends Key {
     values: Array<any>;
 }
 
-interface KeyTimePair extends Key{
+interface KeyTimePair extends Key {
     seconds: number
 }
 
-interface KeyValueTimePair extends KeyValuePair{
+interface KeyValueTimePair extends KeyValuePair {
     seconds: number
 }
 
-interface KeyDesPair extends KeyValuePair{
+interface KeyDesPair extends KeyValuePair {
     destination: number
 }
 
