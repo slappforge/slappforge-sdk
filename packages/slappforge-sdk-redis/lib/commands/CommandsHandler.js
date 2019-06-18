@@ -25,7 +25,7 @@ module.exports = function () {
 
     this.execute = function (command, callback) {
         let params, client, counter, errCount = 0;
-        let responseArray = [];
+        let results = {};
         try {
             params = command.params;
             counter = params.length;
@@ -37,17 +37,23 @@ module.exports = function () {
                     param,
                     (response, redisClient) => {
                         counter--;
-                        if (response.error)
+                        if (response.error){
                             errCount++;
-                        redisClient && counter === 0 ? client = redisClient : redisClient.quit();
-                        responseArray[param.key || param] = response;
+                        }
+
+                        if (counter === 0) {
+                            client = redisClient;
+                        } else if (redisClient) {
+                            redisClient.quit();
+                        }
+                        results[param.key || param] = response;
                         return callback();
                     });
             }, () => {
                 callback(
                     undefined,
                     {
-                        results: responseArray,
+                        results: results,
                         success: params.length - errCount,
                         failed: errCount
                     }, client);
@@ -59,7 +65,7 @@ module.exports = function () {
 
     this.setExecute = function (command, callback) {
         let client, errCount = 0, inputCount = 0;
-        let responseArray = [];
+        let results = {};
         try {
             let outerCounter = command.params.length;
             async.forEach(command.params, (param, callback) => {
@@ -76,16 +82,23 @@ module.exports = function () {
                                 value: value
                             },
                             (response, redisClient) => {
-                                --innerCounter === 0 ? outerCounter-- : null;
-                                response.error ? errCount++ : null;
-                                redisClient && outerCounter === 0 ?
-                                    client = redisClient : redisClient.quit();
+                                if (--innerCounter === 0) {
+                                    outerCounter--;
+                                }
+                                if (response.error) {
+                                    errCount++;
+                                }
+                                if (outerCounter === 0) {
+                                    client = redisClient;
+                                } else if (redisClient) {
+                                    redisClient.quit();
+                                }
                                 resObj[value] = response;
                                 return callback();
                             });
                     },
                     () => {
-                        responseArray[param.key] = resObj;
+                        results[param.key || param] = resObj;
                         return callback();
                     }
                 );
@@ -93,7 +106,7 @@ module.exports = function () {
                 callback(
                     undefined,
                     {
-                        results: responseArray,
+                        results: results,
                         success: inputCount - errCount,
                         failed: errCount
                     }, client);
