@@ -20,31 +20,199 @@
 export class Redis {
     constructor(clusterManager: ClusterManager);
 
-    set(prams: SETParams, callback: Function);
+    //string
+    append(params: APPENDParams, callback: Function);
 
-    get(prams: GETParams, callback: Function);
+    incrby(params: INCRBYParams, callback: Function);
 
-    del(prams: DELParams, callback: Function);
+    decrby(params: DECRBYParams, callback: Function);
 
+    get(params: GETParams, callback: Function);
+
+    set(params: SETParams, callback: Function);
+
+    setex(params: SETEXParams, callback: Function);
+
+    strlen(params: STRLENParams, callback: Function);
+
+    //type
+    del(params: DELParams, callback: Function);
+
+    expire(params: EXPIREParams, callback: Function);
+
+    persist(params: PERSISTParams, callback: Function);
+
+    type(params: TYPEParams, callback: Function);
+
+    rename(params: RENAMEParams, callback: Function);
+
+    //sets
+    sadd(params: SADDParams, callback: Function);
+
+    scard(params: SCARDParams, callback: Function);
+
+    sdiff(params: SDIFFParams, callback: Function);
+
+    sdiffstore(params: SDIFFSTOREParams, callback: Function);
+
+    sinter(params: SINTERParams, callback: Function);
+
+    sinterstore(params: SINTERSTOREParams, callback: Function);
+
+    sismember(params: SISMEMBERParams, callback: Function);
+
+    smembers(params: SMEMBERSParams, callback: Function);
+
+    smove(params: SMOVEParams, callback: Function);
+
+    srem(params: SREMParams, callback: Function);
+
+    sunion(params: SUNIONParams, callback: Function);
+
+    sunionstore(params: SUNIONSTOREParams, callback: Function);
 }
 
-interface RedisParams {
-    clusterIdentifier: string;
-    clusterModeEnabled: boolean;
+interface Key {
+    key: string,
 }
 
-interface SETParams extends RedisParams {
-    keyValuePairs: Array<Object>;
+interface KeyDecrPair extends Key {
+    decrement: number
 }
 
-interface GETParams extends RedisParams {
-    keys: Array<string>;
+interface KeyIncrPair extends Key {
+    increment: number
 }
 
-interface DELParams extends RedisParams {
-    keys: Array<string>;
+interface KeyNamePair extends Key {
+    name: string
+}
+
+interface KeyValuePair extends Key {
+    value: string
+}
+
+interface KeyValuesArray extends Key {
+    values: Array<any>;
+}
+
+interface KeyTimePair extends Key {
+    seconds: number
+}
+
+interface KeyValueTimePair extends KeyValuePair {
+    seconds: number
+}
+
+interface KeyDesPair extends KeyValuePair {
+    destination: number
 }
 
 interface ClusterManager {
     clusters: Array<object>;
 }
+
+interface RedisParams {
+    redisClient: object;
+    clusterIdentifier: string;
+    clusterModeEnabled: boolean;
+}
+
+interface APPENDParams extends RedisParams {
+    params: Array<KeyValuePair>;
+}
+
+interface DECRBYParams extends RedisParams {
+    params: Array<KeyDecrPair>;
+}
+
+interface INCRBYParams extends RedisParams {
+    params: Array<KeyIncrPair>;
+}
+
+interface GETParams extends RedisParams {
+    params: Array<string>;
+}
+
+interface SETParams extends RedisParams {
+    params: Array<KeyValuePair>;
+}
+
+interface SETEXParams extends RedisParams {
+    params: Array<KeyValueTimePair>;
+}
+
+interface STRLENParams extends RedisParams {
+    params: Array<string>;
+}
+
+interface DELParams extends RedisParams {
+    params: Array<string>;
+}
+
+interface EXPIREParams extends RedisParams {
+    params: Array<KeyTimePair>;
+}
+
+interface PERSISTParams extends RedisParams {
+    params: Array<string>;
+}
+
+interface TYPEParams extends RedisParams {
+    params: Array<string>;
+}
+
+interface RENAMEParams extends RedisParams {
+    params: Array<KeyNamePair>;
+}
+
+interface SADDParams extends RedisParams {
+    params: Array<KeyValuesArray>;
+}
+
+interface SCARDParams extends RedisParams {
+    params: Array<string>;
+}
+
+interface SDIFFParams extends RedisParams {
+    params: Array<KeyValuesArray>;
+}
+
+interface SDIFFSTOREParams extends RedisParams {
+    params: Array<KeyValuesArray>;
+}
+
+interface SINTERParams extends RedisParams {
+    params: Array<KeyValuesArray>;
+}
+
+interface SINTERSTOREParams extends RedisParams {
+    params: Array<KeyValuesArray>;
+}
+
+interface SISMEMBERParams extends RedisParams {
+    params: Array<KeyValuesArray>;
+}
+
+interface SMEMBERSParams extends RedisParams {
+    params: Array<string>;
+}
+
+interface SMOVEParams extends RedisParams {
+    params: Array<KeyDesPair>;
+}
+
+interface SREMParams extends RedisParams {
+    params: Array<KeyValuesArray>;
+}
+
+interface SUNIONParams extends RedisParams {
+    params: Array<KeyValuesArray>;
+}
+
+interface SUNIONSTOREParams extends RedisParams {
+    params: Array<KeyValuesArray>;
+}
+
+
+

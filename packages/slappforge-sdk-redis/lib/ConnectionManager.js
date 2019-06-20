@@ -14,32 +14,38 @@
  * limitations under the License.
  */
 
+/**
+ * @author Lahiru Ananda
+ */
+
 let redis = require('redis');
 const validatorRegex = "^(MOVED)\\ [0-9]*\\ [0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}:[0-9]{1,5}$";
 
 module.exports = {
 
     connect: function (clusterSpec, redirect, callback) {
-
-        let tmpObj = clusterSpec;
-        if (redirect) {
-            tmpObj.host = redirect.host;
-            tmpObj.port = redirect.port;
+        if (clusterSpec.redisClient) {
+            callback(undefined, clusterSpec.redisClient)
+        } else {
+            let tmpObj = clusterSpec;
+            if (redirect) {
+                tmpObj.host = redirect.host;
+                tmpObj.port = redirect.port;
+            }
+            let redisClient = redis.createClient(tmpObj);
+            redisClient.on('ready', () => {
+                callback(undefined, redisClient);
+            });
         }
-
-        let redisClient = redis.createClient(tmpObj);
-        redisClient.on('ready', () => {
-            callback(null, redisClient);
-        });
     },
 
     validateResponse: function (errorMsg, callback) {
         let regex = new RegExp(validatorRegex);
         if (regex.test(errorMsg)) {
-            let destination = errorMsg.split(" ")[2];
+            let destination = errorMsg.split(" ")[2].split(":");
             callback({
-                host: destination.split(":")[0],
-                port: parseInt(destination.split(":")[1])
+                host: destination[0],
+                port: parseInt(destination[1])
             });
         } else {
             callback(null);
